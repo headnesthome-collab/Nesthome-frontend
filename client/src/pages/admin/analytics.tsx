@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { SEO } from "@/components/seo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getLeads } from "@/lib/firebase";
+import { apiUrl } from "@/lib/api-config";
+import { useAdmin } from "@/contexts/admin-context";
 import { format, subDays, startOfDay, endOfDay, eachDayOfInterval } from "date-fns";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
 
@@ -26,36 +28,108 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'
 export default function AdminAnalytics() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
+  const { sessionId, isAuthenticated } = useAdmin();
 
-  useEffect(() => {
-    const loadStorageLeads = () => {
-      try {
-        const storedLeads = localStorage.getItem("nesthome_leads");
-        if (storedLeads) {
-          const parsedLeads = JSON.parse(storedLeads);
-          setLeads(parsedLeads);
-        }
-      } catch (e) {
-        console.error("Error loading leads from storage:", e);
-      }
-      setLoading(false);
-    };
-
-    loadStorageLeads();
+  // Fetch leads from backend API (Firebase + Google Sheets)
+  const fetchLeadsFromBackend = async () => {
+    if (!isAuthenticated || !sessionId) {
+      console.warn("Not authenticated, skipping backend fetch");
+      return;
+    }
 
     try {
-      const unsubscribe = getLeads((firebaseLeads) => {
-        if (firebaseLeads && firebaseLeads.length > 0) {
-          setLeads(firebaseLeads);
-        }
+      const response = await fetch(apiUrl("api/leads"), {
+        headers: {
+          "x-session-id": sessionId,
+        },
       });
-      return () => {
-        if (unsubscribe) unsubscribe();
-      };
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.leads) {
+          // Map backend leads to frontend format
+          const mappedLeads = result.leads.map((lead: any) => ({
+            id: lead.id,
+            firebaseId: lead.id,
+            name: lead.name,
+            mobile: lead.mobile,
+            city: lead.city,
+            timeline: lead.timeline,
+            startMonth: lead.timeline,
+            submittedAt: lead.submittedAt,
+            status: lead.status || "New",
+          }));
+          setLeads(mappedLeads);
+          console.log(`✅ Loaded ${mappedLeads.length} leads from backend`);
+        }
+      } else {
+        console.warn("Failed to fetch leads from backend:", response.status);
+      }
     } catch (error) {
-      console.warn("Firebase not available:", error);
+      console.error("Error fetching leads from backend:", error);
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    const loadLeads = async () => {
+      setLoading(true);
+      let backendLeadsLoaded = false;
+      
+      // First, try to fetch from backend API (Firebase + Google Sheets)
+      if (isAuthenticated && sessionId) {
+        await fetchLeadsFromBackend();
+        backendLeadsLoaded = true;
+      }
+
+      // Fallback: Load from localStorage if backend didn't load anything
+      if (!backendLeadsLoaded) {
+        try {
+          const storedLeads = localStorage.getItem("nesthome_leads");
+          if (storedLeads) {
+            const parsedLeads = JSON.parse(storedLeads);
+            setLeads(parsedLeads);
+          }
+        } catch (e) {
+          console.error("Error loading leads from storage:", e);
+        }
+      }
+
+      // Also subscribe to Firebase for real-time updates
+      try {
+        const unsubscribe = getLeads((firebaseLeads) => {
+          if (firebaseLeads && firebaseLeads.length > 0) {
+            // Merge with existing leads
+            setLeads((prevLeads) => {
+              const leadsMap = new Map(prevLeads.map((l) => [l.id, l]));
+              firebaseLeads.forEach((lead) => {
+                leadsMap.set(lead.id, lead);
+              });
+              return Array.from(leadsMap.values());
+            });
+          }
+        });
+        setLoading(false);
+        return () => {
+          if (unsubscribe) unsubscribe();
+        };
+      } catch (error) {
+        console.warn("Firebase not available:", error);
+        setLoading(false);
+      }
+    };
+
+    loadLeads();
+
+    // Refresh from backend every 30 seconds if authenticated
+    let refreshInterval: NodeJS.Timeout | null = null;
+    if (isAuthenticated && sessionId) {
+      refreshInterval = setInterval(fetchLeadsFromBackend, 30000);
+    }
+
+    return () => {
+      if (refreshInterval) clearInterval(refreshInterval);
+    };
+  }, [isAuthenticated, sessionId]);
 
   // Leads over time (last 30 days)
   const leadsOverTime = (() => {
