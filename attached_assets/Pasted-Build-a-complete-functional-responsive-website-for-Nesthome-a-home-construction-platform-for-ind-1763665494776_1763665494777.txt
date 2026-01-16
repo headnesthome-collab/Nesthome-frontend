@@ -1,0 +1,323 @@
+Build a complete, functional, responsive website for Nesthome — a home-construction platform for independent plot owners in Tier-2 and Tier-3 cities in India.
+Model the structure, layout, and user flow similar to 100Pillars.in, but do NOT show contractor details or profiles.
+The primary goal is to collect high-quality leads and let customers understand our process and pricing transparently.
+
+
+---
+
+🎨 1. Brand Requirements
+
+Clean, premium, trustworthy design
+
+Color palette: white, blue, light grey
+
+Typography: modern, minimal, construction-tech feel
+
+High-quality home project images (generic)
+
+No contractor photos or names anywhere
+
+
+
+---
+
+🏠 2. Website Structure (Build All Pages)
+
+A. Home Page
+
+Sections (in this exact order):
+
+1. Hero Section
+
+Headline: “Build your dream home with transparency and trust.”
+
+Sub-headline: “Share your plot details and get a clear fixed-cost estimate.”
+
+Main CTA: Get My Estimate
+
+Add a clean background image of a modern home
+
+
+
+2. Value Pillars (3 or 4 icons)
+
+Transparency
+
+Verified Process
+
+Fixed Cost
+
+Dedicated Project Manager
+
+
+
+3. How Nesthome Works (4 Step Process)
+
+Share plot details
+
+Get transparent estimate
+
+Sign & start
+
+Track & handover
+
+
+
+4. Services Preview
+
+Architecture & Design
+
+Construction & Materials
+
+Project Monitoring
+
+Legal & Approvals
+
+
+
+5. Why Choose Us
+
+No hidden costs
+
+Milestone-based payments
+
+Full project tracking
+
+Verified workforce (but not shown publicly)
+
+
+
+6. Project Snippets / Case Studies
+
+Use generic images
+
+Add project cost & timeline
+
+No contractor names
+
+
+
+7. Lead Form Preview + CTA
+
+Button: Start Building
+
+
+
+8. City Availability
+
+Start with Indore
+
+
+
+9. Footer
+
+Contact info
+
+Privacy note
+
+WhatsApp link
+
+
+
+
+
+---
+
+🧱 B. Services Page
+
+Show services like:
+
+Architecture & Design
+
+Full Home Construction
+
+Material Procurement
+
+Project Monitoring & Quality Checks
+
+Legal & Approval Support
+
+
+Add a CTA at the bottom: Request Estimate
+
+
+---
+
+⚙️ C. How It Works Page
+
+4–6 step visual timeline:
+
+1. Share plot details
+
+
+2. Remote/onsite site check
+
+
+3. Transparent estimate
+
+
+4. Contract & milestone plan
+
+
+5. Construction & tracking
+
+
+6. Handover
+
+
+
+
+---
+
+👥 D. Partner/Contractor Signup Page
+
+Headline: “Partner with Nesthome”
+
+Add a simple signup form
+
+This page must NOT show any contractor profiles
+
+
+
+---
+
+🧾 E. About Us Page
+
+Mission: Bringing transparency to India’s home-construction market
+
+Vision: Building India’s most trusted home-construction ecosystem
+
+Why we exist: Solve delays, poor quality, price jumps, lack of trust
+
+
+
+---
+
+📞 F. Contact Page
+
+Simple contact form
+
+WhatsApp button
+
+Phone + email
+
+
+
+---
+
+📝 3. Lead Form (IMPORTANT — BUILD THIS EXACTLY)
+
+Fields required:
+
+Name
+
+Mobile Number (required)
+
+City / Locality
+
+Plot Size (sq ft or sq yd)
+
+Budget Range
+
+Project Type (New build / Extension / Renovation)
+
+Start month
+
+Upload plot photo (optional)
+
+Additional notes (optional)
+
+Consent checkbox
+
+
+After submission:
+
+Show confirmation message
+
+Send email + WhatsApp trigger
+
+Store data in database or Google Sheets
+
+
+
+---
+
+📊 4. Tracking Requirements
+
+Add:
+
+Google Analytics (GA4)
+
+Meta Pixel
+
+Event tracking:
+
+CTA click
+
+Form open
+
+Form submission
+
+
+
+
+---
+
+📱 5. Mobile-First Requirements
+
+Sticky CTA: Get Estimate
+
+Lead form must open as a mobile-friendly modal
+
+Fast loading
+
+
+
+---
+
+🛠 6. Build Settings
+
+Fully responsive
+
+SEO optimized
+
+Add blog/insights section for future articles
+
+Clean animations
+
+Separate CMS for case studies
+
+Connect WhatsApp API
+
+
+
+---
+
+🔒 7. Trust Notes (Must Appear)
+
+Add this text in footer and near forms:
+
+“Nesthome does not publicly display contractor details. All projects are delivered through our verified and managed partner network.”
+
+
+---
+
+🧱 8. Competitor Style Inspiration
+
+Design similar to:
+
+100Pillars.in (structure, flow)
+
+Brick & Bolt (trust-driven messaging — but without showing contractors)
+
+
+
+---
+
+🎯 Goal of This Website
+
+Collect high-quality leads, test with real customers, and validate Nesthome’s demand in Indore.
+Everything must point toward the lead form.
+
+
+---

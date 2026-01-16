@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://yourdomain.com/sitemap.xml
+
+# Allow indexing for Google, Bing
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
