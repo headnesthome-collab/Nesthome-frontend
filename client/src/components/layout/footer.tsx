@@ -138,6 +138,28 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link href="/terms">
+                    <motion.span 
+                      whileHover={{ x: 5 }}
+                      className="text-white/70 hover:text-[#d4af37] transition-colors cursor-pointer duration-300 flex items-center gap-1 group"
+                    >
+                      Terms of Service
+                      <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </motion.span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy-policy">
+                    <motion.span 
+                      whileHover={{ x: 5 }}
+                      className="text-white/70 hover:text-[#d4af37] transition-colors cursor-pointer duration-300 flex items-center gap-1 group"
+                    >
+                      Privacy Policy
+                      <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </motion.span>
+                  </Link>
+                </li>
               </ul>
             </CollapsibleSection>
           </motion.div>
@@ -149,8 +171,6 @@ export function Footer() {
                   "Home Planning & Design",
                   "Construction Support",
                   "Progress Tracking",
-                  "Payment Structuring",
-                  "Quality Oversight",
                 ].map((service) => (
                   <motion.li 
                     key={service}
